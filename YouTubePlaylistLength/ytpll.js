@@ -28,15 +28,20 @@ const output = document.createElement( "output" ),
 
 	timestringArray2Timestring = arr => seconds2Timestring( timestringArray2Seconds( arr ) );
 
-let stats, playlist, cplt, plt, interval = window.setInterval( () => {
+let stats, playlist, cplt, plt,
+
+interval = window.setInterval( () => {
 	if ( stats = document.querySelector( "#stats" ) ) {
 		window.clearInterval( interval );
+		
 		output.title = "Playlist may not be fully displayed; scroll to end for true total";
 		output.style.marginBottom = "0.5em";
 		output.style.fontSize = "120%";
 		output.style.display = "block";
 		stats.prepend( output );
-		console.log( "YouTubePlaylistLength: Initialized." );
+		
+		console.warn( 'The browser extension "YouTube Playlist Length", from https://github.com/FredGandt/YouTubePlaylistLength, is installed and enabled.' );
+		
 		interval = window.setInterval( () => {
 			if ( playlist = document.querySelectorAll( 'ytd-browse.ytd-page-manager[page-subtype="playlist"] span.ytd-thumbnail-overlay-time-status-renderer' ) ) {
 				cplt = timestringArray2Timestring( Array.from( playlist ).map( t => t.textContent.trim() ) );
