@@ -1,8 +1,8 @@
 "use strict";
 
-const output = document.createElement( "output" ),
+console.log( '%cThe browser extension "YouTube Playlist Length", from https://github.com/FredGandt/YouTubePlaylistLength, is installed and enabled.', "color:#088" );
 
-	seconds2Timestring = total_seconds => {
+const seconds2Timestring = total_seconds => {
 		let remaining_seconds = total_seconds % 60,
 			m = ( total_seconds - remaining_seconds ) / 60,
 			minutes = m % 60,
@@ -26,29 +26,51 @@ const output = document.createElement( "output" ),
 		}, 0 );
 	},
 
-	timestringArray2Timestring = arr => seconds2Timestring( timestringArray2Seconds( arr ) );
+	outputOutput = ( op, pl ) => {
+		let optc = op.textContent,
+			pltt = timestringArray2Timestring( Array.from( pl.querySelectorAll( "span#text" ) ).map( t => t.textContent.trim() ) );
+		if ( optc !== pltt ) {
+			op.textContent = `Total time: ${pltt}`;
+		}
+	},
 
-let stats, playlist, cplt, plt,
+	timestringArray2Timestring = arr => seconds2Timestring( timestringArray2Seconds( arr ) ),
 
-interval = window.setInterval( () => {
-	if ( stats = document.querySelector( "#stats" ) ) {
-		window.clearInterval( interval );
-		
-		output.title = "Playlist may not be fully displayed; scroll to end for true total";
-		output.style.marginBottom = "0.5em";
-		output.style.fontSize = "120%";
-		output.style.display = "block";
-		stats.prepend( output );
-		
-		console.warn( 'The browser extension "YouTube Playlist Length", from https://github.com/FredGandt/YouTubePlaylistLength, is installed and enabled.' );
-		
-		interval = window.setInterval( () => {
-			if ( playlist = document.querySelectorAll( 'ytd-browse.ytd-page-manager[page-subtype="playlist"] span.ytd-thumbnail-overlay-time-status-renderer' ) ) {
-				cplt = timestringArray2Timestring( Array.from( playlist ).map( t => t.textContent.trim() ) );
-				if ( cplt !== plt ) {
-					output.textContent = `Total time: ${plt = cplt}`;
-				}
-			}
-		}, 250 );
-	}
-}, 250 );
+	output = document.createElement( "output" );
+
+output.title = "limitation: the total time is calculated from the times of only the displayed videos and it is possible that not all playlisted videos are displayed";
+output.style.color = "var(--yt-spec-text-secondary)";
+output.style.display = "block";
+
+let playlist, stats, playlist_output,
+	watch, publisher, watch_output,
+	pltt, npltt, ph,
+	interval = window.setInterval( () => {
+
+		watch = watch || document.querySelector( "#page-manager ytd-playlist-panel-renderer" );
+		playlist = playlist || document.querySelector( "#page-manager ytd-browse" );
+		publisher = publisher || watch?.querySelector( "#publisher-container" );
+		stats = stats || playlist?.querySelector( "#stats" );
+
+		if ( !playlist_output && stats ) {
+			playlist_output = output.cloneNode();
+			playlist_output.style.marginBottom = "0.5em";
+			playlist_output.style.fontSize = "120%";
+			stats.prepend( playlist_output );
+		}
+
+		if ( !watch_output && publisher ) {
+			watch_output = output.cloneNode();
+			watch_output.style.fontSize = "150%";
+			publisher.before( watch_output );
+		}
+
+		if ( playlist_output && playlist && !playlist.hidden ) {
+			outputOutput( playlist_output, playlist );
+		}
+
+		if ( watch_output && watch && ( !playlist || playlist.hidden ) ) {
+			outputOutput( watch_output, watch );
+		}
+
+	}, 250 );
