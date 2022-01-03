@@ -1,13 +1,13 @@
 {
 	"manifest_version": 2,
 	"name": "YouTubePlaylistLength",
-	"description": "Show total length of YouTube playlist",
-	"version": "0.0.1",
+	"description": "Show total length of YouTube playlists",
+	"version": "0.0.2",
 	"offline_enabled": false,
-	"permissions": [ "https://*.youtube.com/" ],
+	"permissions": [ "https://www.youtube.com/" ],
 	"page_action": { "default_title": "YouTube Playlist Length" },
 	"content_scripts": [ {
-		"matches": [ "https://*.youtube.com/*" ],
+		"matches": [ "https://www.youtube.com/*" ],
 		"js": [ "ytpll.js" ]
 	} ]
 }
