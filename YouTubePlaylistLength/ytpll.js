@@ -48,8 +48,8 @@ let playlist, stats, playlist_output,
 
 window.setInterval( () => {
 
+	playlist = playlist || document.querySelector( '#page-manager ytd-browse[page-subtype="playlist"]' );
 	watch = watch || document.querySelector( "#page-manager ytd-playlist-panel-renderer" );
-	playlist = playlist || document.querySelector( "#page-manager ytd-browse" );
 	publisher = publisher || watch?.querySelector( "#publisher-container" );
 	stats = stats || playlist?.querySelector( "#stats" );
 
