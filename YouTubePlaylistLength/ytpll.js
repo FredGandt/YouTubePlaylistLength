@@ -26,7 +26,7 @@ const seconds2Timestring = total_seconds => {
 		}, 0 );
 	},
 
-	outputOutput = ( op, pl ) => {
+	output2Output = ( op, pl ) => {
 		let optc = op.textContent,
 			pltt = timestringArray2Timestring( Array.from( pl.querySelectorAll( "span#text" ) ).map( t => t.textContent.trim() ) );
 		if ( optc !== pltt ) {
@@ -44,33 +44,34 @@ output.style.display = "block";
 
 let playlist, stats, playlist_output,
 	watch, publisher, watch_output,
-	pltt, npltt, ph,
-	interval = window.setInterval( () => {
+	pltt, npltt, ph;
 
-		watch = watch || document.querySelector( "#page-manager ytd-playlist-panel-renderer" );
-		playlist = playlist || document.querySelector( "#page-manager ytd-browse" );
-		publisher = publisher || watch?.querySelector( "#publisher-container" );
-		stats = stats || playlist?.querySelector( "#stats" );
+window.setInterval( () => {
 
-		if ( !playlist_output && stats ) {
-			playlist_output = output.cloneNode();
-			playlist_output.style.marginBottom = "0.5em";
-			playlist_output.style.fontSize = "120%";
-			stats.prepend( playlist_output );
-		}
+	watch = watch || document.querySelector( "#page-manager ytd-playlist-panel-renderer" );
+	playlist = playlist || document.querySelector( "#page-manager ytd-browse" );
+	publisher = publisher || watch?.querySelector( "#publisher-container" );
+	stats = stats || playlist?.querySelector( "#stats" );
 
-		if ( !watch_output && publisher ) {
-			watch_output = output.cloneNode();
-			watch_output.style.fontSize = "150%";
-			publisher.before( watch_output );
-		}
+	if ( !playlist_output && stats ) {
+		playlist_output = output.cloneNode();
+		playlist_output.style.marginBottom = "0.5em";
+		playlist_output.style.fontSize = "120%";
+		stats.prepend( playlist_output );
+	}
 
-		if ( playlist_output && playlist && !playlist.hidden ) {
-			outputOutput( playlist_output, playlist );
-		}
+	if ( !watch_output && publisher ) {
+		watch_output = output.cloneNode();
+		watch_output.style.fontSize = "150%";
+		publisher.before( watch_output );
+	}
 
-		if ( watch_output && watch && ( !playlist || playlist.hidden ) ) {
-			outputOutput( watch_output, watch );
-		}
+	if ( playlist_output && playlist && !playlist.hidden ) {
+		output2Output( playlist_output, playlist );
+	}
 
-	}, 250 );
+	if ( watch_output && watch && ( !playlist || playlist.hidden ) ) {
+		output2Output( watch_output, watch );
+	}
+
+}, 250 );
