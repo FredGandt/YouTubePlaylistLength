@@ -1,3 +1,7 @@
+>[!IMPORTANT]
+>YouTube is being constantly updated so this may no longer work at all or as intended.
+>This code is unlikely to be updated regularly or at all to keep up.
+
 # YouTubePlaylistLength
 Displays the total length of YouTube playlists on their pages (e.g. https://www.youtube.com/playlist?list=PLeMK2ffi7KQV3EWSzuMI4j-KbGG7JfJKd (Prostrate at the Feet of Giants by Fred Gandt)) and on their sidebar when playing them (e.g. https://www.youtube.com/watch?v=ylRkDv4ofqQ&list=PLeMK2ffi7KQV3EWSzuMI4j-KbGG7JfJKd (Why Can't I Touch Carolyn's Rock Steady Puppet Fingers? by Fred Gandt))
 
